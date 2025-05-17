@@ -3,6 +3,7 @@ import { blogPosts } from "@/data";
 import { Search, Calendar, MessageSquare, Eye, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import BlogSection from "@/components/sections/BlogSection";
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState("");

@@ -1,7 +1,7 @@
 import HeroSection from "@/components/sections/HeroSection";
 import QuickOverview from "@/components/sections/QuickOverview";
 import { Link } from "wouter";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Calendar, Briefcase, Brain, Code, Book, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { personalInfo, experiences, services, blogPosts } from "@/data";
 
@@ -22,7 +22,7 @@ const Home = () => {
               <h2 className="text-3xl font-bold mb-2">About Me</h2>
               <div className="w-16 h-1 bg-primary mb-4"></div>
               <p className="max-w-lg text-foreground/80">
-                As a Data Science Leader with over {personalInfo.yearsOfExperience} years of experience, 
+                As a Data Science Leader with over 15 years of experience, 
                 I specialize in developing advanced AI/ML solutions that drive tangible business value.
               </p>
             </div>

@@ -41,12 +41,15 @@ const Services = () => {
               <div className="p-6">
                 <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
                   <span className="text-primary text-2xl">
-                    {service.icon === "brain" && "🧠"}
-                    {service.icon === "chart" && "📊"}
-                    {service.icon === "robot" && "🤖"}
-                    {service.icon === "data" && "📈"}
-                    {service.icon === "security" && "🛡️"}
-                    {service.icon === "cloud" && "☁️"}
+                    {service.icon === "brain" || service.icon === "fa-brain" ? "🧠" : ""}
+                    {service.icon === "chart" || service.icon === "fa-chart-bar" ? "📊" : ""}
+                    {service.icon === "robot" || service.icon === "fa-robot" ? "🤖" : ""}
+                    {service.icon === "data" || service.icon === "fa-database" ? "📈" : ""}
+                    {service.icon === "security" || service.icon === "fa-shield-alt" ? "🛡️" : ""}
+                    {service.icon === "cloud" || service.icon === "fa-cloud" ? "☁️" : ""}
+                    {service.icon === "fa-cogs" ? "⚙️" : ""}
+                    {service.icon === "fa-chalkboard-teacher" ? "👨‍🏫" : ""}
+                    {service.icon === "fa-user-tie" ? "👨‍💼" : ""}
                   </span>
                 </div>
                 
