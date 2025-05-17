@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "@/hooks/useTheme";
-import { Moon, Sun, Menu, X } from "lucide-react";
+import { Link, useLocation } from "wouter";
+import { Moon, Sun, Menu, X, UserCircle } from "lucide-react";
 import { personalInfo } from "@/data";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [location] = useLocation();
 
   // Update navbar style on scroll
   useEffect(() => {
@@ -33,86 +36,103 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   };
 
+  // Check if link is active
+  const isActive = (path: string) => {
+    return location === path ? "text-primary font-medium" : "text-foreground hover:text-primary";
+  };
+
   return (
     <header 
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      className={`sticky top-0 left-0 w-full z-50 transition-all duration-300 ${
         isScrolled ? "bg-background/95 backdrop-blur-sm shadow-md" : "bg-background"
       }`}
     >
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo/Name */}
-          <a href="#" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2">
             <h1 className="text-xl md:text-2xl font-bold text-foreground">
               <span className="text-foreground">{personalInfo.name}</span>
               <span className="hidden sm:inline-block text-sm ml-2 font-normal text-muted-foreground">
                 {personalInfo.title}
               </span>
             </h1>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <a 
-              href="#home" 
-              className="text-foreground hover:text-primary transition-colors duration-200"
+          <nav className="hidden md:flex items-center space-x-6">
+            <Link 
+              href="/" 
+              className={`${isActive("/")} transition-colors duration-200`}
               onClick={handleNavLinkClick}
             >
               Home
-            </a>
-            <a 
-              href="#about" 
-              className="text-foreground hover:text-primary transition-colors duration-200"
+            </Link>
+            <Link 
+              href="/about" 
+              className={`${isActive("/about")} transition-colors duration-200`}
               onClick={handleNavLinkClick}
             >
               About
-            </a>
-            <a 
-              href="#experience" 
-              className="text-foreground hover:text-primary transition-colors duration-200"
+            </Link>
+            <Link 
+              href="/experience" 
+              className={`${isActive("/experience")} transition-colors duration-200`}
               onClick={handleNavLinkClick}
             >
               Experience
-            </a>
-            <a 
-              href="#skills" 
-              className="text-foreground hover:text-primary transition-colors duration-200"
+            </Link>
+            <Link 
+              href="/skills" 
+              className={`${isActive("/skills")} transition-colors duration-200`}
               onClick={handleNavLinkClick}
             >
               Skills
-            </a>
-            <a 
-              href="#jobs" 
-              className="text-foreground hover:text-primary transition-colors duration-200"
+            </Link>
+            <Link 
+              href="/jobs" 
+              className={`${isActive("/jobs")} transition-colors duration-200`}
               onClick={handleNavLinkClick}
             >
               Jobs
-            </a>
-            <a 
-              href="#services" 
-              className="text-foreground hover:text-primary transition-colors duration-200"
+            </Link>
+            <Link 
+              href="/services" 
+              className={`${isActive("/services")} transition-colors duration-200`}
               onClick={handleNavLinkClick}
             >
               Services
-            </a>
-            <a 
-              href="#blog" 
-              className="text-foreground hover:text-primary transition-colors duration-200"
+            </Link>
+            <Link 
+              href="/blog" 
+              className={`${isActive("/blog")} transition-colors duration-200`}
               onClick={handleNavLinkClick}
             >
               Blog
-            </a>
-            <a 
-              href="#contact" 
-              className="text-foreground hover:text-primary transition-colors duration-200"
+            </Link>
+            <Link 
+              href="/contact" 
+              className={`${isActive("/contact")} transition-colors duration-200`}
               onClick={handleNavLinkClick}
             >
               Contact
-            </a>
+            </Link>
           </nav>
 
-          {/* Theme Toggle and Mobile Menu Button */}
+          {/* Theme Toggle, Auth and Mobile Menu Button */}
           <div className="flex items-center space-x-4">
+            <div className="hidden md:block">
+              <Link href="/login">
+                <Button variant="outline" size="sm" className="mr-2 px-4">
+                  <UserCircle className="mr-1 h-4 w-4" />
+                  Login
+                </Button>
+              </Link>
+              <Link href="/signup">
+                <Button size="sm" className="px-4">Sign Up</Button>
+              </Link>
+            </div>
+            
             <button
               onClick={toggleTheme}
               className="p-2 rounded-full hover:bg-secondary transition-colors duration-200"
@@ -143,67 +163,76 @@ const Navbar = () => {
       {/* Mobile Navigation Menu */}
       <div
         className={`md:hidden transition-all duration-300 overflow-hidden ${
-          mobileMenuOpen ? "max-h-96" : "max-h-0"
+          mobileMenuOpen ? "max-h-[500px]" : "max-h-0"
         }`}
       >
         <div className="container mx-auto px-4 py-2 bg-background border-t border-border">
-          <nav className="flex flex-col space-y-4 py-2">
-            <a 
-              href="#home" 
-              className="text-foreground hover:text-primary transition-colors duration-200 py-2"
+          <nav className="flex flex-col space-y-3 py-2">
+            <Link 
+              href="/" 
+              className={`${isActive("/")} transition-colors duration-200 py-2`}
               onClick={handleNavLinkClick}
             >
               Home
-            </a>
-            <a 
-              href="#about" 
-              className="text-foreground hover:text-primary transition-colors duration-200 py-2"
+            </Link>
+            <Link 
+              href="/about" 
+              className={`${isActive("/about")} transition-colors duration-200 py-2`}
               onClick={handleNavLinkClick}
             >
               About
-            </a>
-            <a 
-              href="#experience" 
-              className="text-foreground hover:text-primary transition-colors duration-200 py-2"
+            </Link>
+            <Link 
+              href="/experience" 
+              className={`${isActive("/experience")} transition-colors duration-200 py-2`}
               onClick={handleNavLinkClick}
             >
               Experience
-            </a>
-            <a 
-              href="#skills" 
-              className="text-foreground hover:text-primary transition-colors duration-200 py-2"
+            </Link>
+            <Link 
+              href="/skills" 
+              className={`${isActive("/skills")} transition-colors duration-200 py-2`}
               onClick={handleNavLinkClick}
             >
               Skills
-            </a>
-            <a 
-              href="#jobs" 
-              className="text-foreground hover:text-primary transition-colors duration-200 py-2"
+            </Link>
+            <Link 
+              href="/jobs" 
+              className={`${isActive("/jobs")} transition-colors duration-200 py-2`}
               onClick={handleNavLinkClick}
             >
               Jobs
-            </a>
-            <a 
-              href="#services" 
-              className="text-foreground hover:text-primary transition-colors duration-200 py-2"
+            </Link>
+            <Link 
+              href="/services" 
+              className={`${isActive("/services")} transition-colors duration-200 py-2`}
               onClick={handleNavLinkClick}
             >
               Services
-            </a>
-            <a 
-              href="#blog" 
-              className="text-foreground hover:text-primary transition-colors duration-200 py-2"
+            </Link>
+            <Link 
+              href="/blog" 
+              className={`${isActive("/blog")} transition-colors duration-200 py-2`}
               onClick={handleNavLinkClick}
             >
               Blog
-            </a>
-            <a 
-              href="#contact" 
-              className="text-foreground hover:text-primary transition-colors duration-200 py-2"
+            </Link>
+            <Link 
+              href="/contact" 
+              className={`${isActive("/contact")} transition-colors duration-200 py-2`}
               onClick={handleNavLinkClick}
             >
               Contact
-            </a>
+            </Link>
+            
+            <div className="flex space-x-2 pt-2 border-t border-border mt-2">
+              <Link href="/login" className="w-1/2">
+                <Button variant="outline" className="w-full">Login</Button>
+              </Link>
+              <Link href="/signup" className="w-1/2">
+                <Button className="w-full">Sign Up</Button>
+              </Link>
+            </div>
           </nav>
         </div>
       </div>

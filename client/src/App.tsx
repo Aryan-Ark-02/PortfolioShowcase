@@ -6,14 +6,40 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import Home from "@/pages/Home";
+import About from "@/pages/About";
+import Experience from "@/pages/Experience";
+import Skills from "@/pages/Skills";
+import Jobs from "@/pages/Jobs";
+import Services from "@/pages/Services";
+import Blog from "@/pages/Blog";
+import Contact from "@/pages/Contact";
+import Login from "@/pages/Login";
+import Signup from "@/pages/Signup";
 import { ChatBot } from "@/components/layout/ChatBot";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 function Router() {
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route component={NotFound} />
-    </Switch>
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <main className="flex-grow">
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/experience" component={Experience} />
+          <Route path="/skills" component={Skills} />
+          <Route path="/jobs" component={Jobs} />
+          <Route path="/services" component={Services} />
+          <Route path="/blog" component={Blog} />
+          <Route path="/contact" component={Contact} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route component={NotFound} />
+        </Switch>
+      </main>
+      <Footer />
+    </div>
   );
 }
 
