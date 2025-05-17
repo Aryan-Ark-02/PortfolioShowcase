@@ -33,7 +33,7 @@ const Contact = () => {
   const onSubmit = async (values: ContactFormValues) => {
     setIsSubmitting(true);
     try {
-      await apiRequest<{success: boolean}>("/api/contact", {
+      await fetch("/api/contact", {
         method: "POST",
         body: JSON.stringify(values),
         headers: {

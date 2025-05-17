@@ -1,144 +1,187 @@
+import { Link } from "wouter";
 import { personalInfo } from "@/data";
+import { Mail, Phone, MapPin } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-
+  
   return (
-    <footer className="bg-primary text-white dark:text-white py-12">
+    <footer className="bg-card dark:bg-card mt-auto pt-16 border-t border-border">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8">
           {/* About Column */}
           <div>
             <h3 className="text-xl font-bold mb-4">{personalInfo.name}</h3>
-            <p className="text-gray-300 mb-4">
-              AI/ML Leader specializing in GenAI, Deep Learning, and ML technologies with 15+ years of experience.
+            <p className="text-foreground/70 dark:text-foreground/70 mb-4">
+              Expert AI/ML leader helping organizations leverage artificial intelligence for growth and innovation.
             </p>
             <div className="flex space-x-4">
-              <a 
-                href={personalInfo.linkedin} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-gray-300 hover:text-white transition-colors"
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground/60 hover:text-primary transition-colors duration-200"
                 aria-label="LinkedIn"
               >
-                <i className="fab fa-linkedin text-xl"></i>
+                <i className="fab fa-linkedin text-lg"></i>
               </a>
-              <a 
-                href={personalInfo.github} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-gray-300 hover:text-white transition-colors"
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground/60 hover:text-primary transition-colors duration-200"
+                aria-label="Twitter"
+              >
+                <i className="fab fa-twitter text-lg"></i>
+              </a>
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground/60 hover:text-primary transition-colors duration-200"
                 aria-label="GitHub"
               >
-                <i className="fab fa-github text-xl"></i>
+                <i className="fab fa-github text-lg"></i>
               </a>
-              <a 
-                href={personalInfo.kaggle} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-gray-300 hover:text-white transition-colors"
-                aria-label="Kaggle"
+              <a
+                href="https://medium.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground/60 hover:text-primary transition-colors duration-200"
+                aria-label="Medium"
               >
-                <i className="fab fa-kaggle text-xl"></i>
-              </a>
-              <a 
-                href={personalInfo.stackoverflow} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-gray-300 hover:text-white transition-colors"
-                aria-label="Stack Overflow"
-              >
-                <i className="fab fa-stack-overflow text-xl"></i>
+                <i className="fab fa-medium text-lg"></i>
               </a>
             </div>
           </div>
           
-          {/* Quick Links */}
+          {/* Quick Links Column */}
           <div>
             <h3 className="text-xl font-bold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#home" className="text-gray-300 hover:text-white transition-colors">Home</a>
+                <Link 
+                  href="/about"
+                  className="text-foreground/70 hover:text-primary transition-colors duration-200"
+                >
+                  About Me
+                </Link>
               </li>
               <li>
-                <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
+                <Link 
+                  href="/services"
+                  className="text-foreground/70 hover:text-primary transition-colors duration-200"
+                >
+                  Services
+                </Link>
               </li>
               <li>
-                <a href="#experience" className="text-gray-300 hover:text-white transition-colors">Experience</a>
+                <Link 
+                  href="/experience"
+                  className="text-foreground/70 hover:text-primary transition-colors duration-200"
+                >
+                  Experience
+                </Link>
               </li>
               <li>
-                <a href="#skills" className="text-gray-300 hover:text-white transition-colors">Skills</a>
+                <Link 
+                  href="/jobs"
+                  className="text-foreground/70 hover:text-primary transition-colors duration-200"
+                >
+                  Job Board
+                </Link>
               </li>
               <li>
-                <a href="#services" className="text-gray-300 hover:text-white transition-colors">Services</a>
+                <Link 
+                  href="/blog"
+                  className="text-foreground/70 hover:text-primary transition-colors duration-200"
+                >
+                  Blog
+                </Link>
               </li>
               <li>
-                <a href="#blog" className="text-gray-300 hover:text-white transition-colors">Blog</a>
+                <Link 
+                  href="/contact"
+                  className="text-foreground/70 hover:text-primary transition-colors duration-200"
+                >
+                  Contact
+                </Link>
               </li>
             </ul>
           </div>
           
-          {/* Services */}
+          {/* Services Column */}
           <div>
             <h3 className="text-xl font-bold mb-4">Services</h3>
             <ul className="space-y-2">
-              <li>
-                <a href="#services" className="text-gray-300 hover:text-white transition-colors">AI Strategy Consulting</a>
+              <li className="text-foreground/70 hover:text-primary transition-colors duration-200">
+                <a href="/services">AI Strategy Consulting</a>
               </li>
-              <li>
-                <a href="#services" className="text-gray-300 hover:text-white transition-colors">GenAI Implementation</a>
+              <li className="text-foreground/70 hover:text-primary transition-colors duration-200">
+                <a href="/services">ML Solution Development</a>
               </li>
-              <li>
-                <a href="#services" className="text-gray-300 hover:text-white transition-colors">LLM Fine-tuning</a>
+              <li className="text-foreground/70 hover:text-primary transition-colors duration-200">
+                <a href="/services">GenAI Implementation</a>
               </li>
-              <li>
-                <a href="#services" className="text-gray-300 hover:text-white transition-colors">Trust & Safety AI</a>
+              <li className="text-foreground/70 hover:text-primary transition-colors duration-200">
+                <a href="/services">Data Science Workshops</a>
               </li>
-              <li>
-                <a href="#services" className="text-gray-300 hover:text-white transition-colors">AI Leadership Workshops</a>
+              <li className="text-foreground/70 hover:text-primary transition-colors duration-200">
+                <a href="/services">AI Ethics & Governance</a>
+              </li>
+              <li className="text-foreground/70 hover:text-primary transition-colors duration-200">
+                <a href="/services">Technical Due Diligence</a>
               </li>
             </ul>
           </div>
           
-          {/* Contact */}
+          {/* Contact Column */}
           <div>
             <h3 className="text-xl font-bold mb-4">Contact</h3>
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               <li className="flex items-start">
-                <i className="fas fa-envelope text-primary-foreground mr-3 mt-1"></i>
+                <MapPin className="w-5 h-5 text-primary mr-3 mt-0.5" />
+                <span className="text-foreground/70">Bangalore, Karnataka, India</span>
+              </li>
+              <li className="flex items-start">
+                <Mail className="w-5 h-5 text-primary mr-3 mt-0.5" />
                 <a 
-                  href={`mailto:${personalInfo.email}`} 
-                  className="text-gray-300 hover:text-white transition-colors"
+                  href="mailto:puneet.sinha@example.com"
+                  className="text-foreground/70 hover:text-primary transition-colors duration-200"
                 >
-                  {personalInfo.email}
+                  puneet.sinha@example.com
                 </a>
               </li>
               <li className="flex items-start">
-                <i className="fas fa-phone-alt text-primary-foreground mr-3 mt-1"></i>
+                <Phone className="w-5 h-5 text-primary mr-3 mt-0.5" />
                 <a 
-                  href={`tel:${personalInfo.phone.replace(/\s/g, '')}`} 
-                  className="text-gray-300 hover:text-white transition-colors"
+                  href="tel:+919876543210"
+                  className="text-foreground/70 hover:text-primary transition-colors duration-200"
                 >
-                  {personalInfo.phone}
+                  +91 9876 543 210
                 </a>
-              </li>
-              <li className="flex items-start">
-                <i className="fas fa-map-marker-alt text-primary-foreground mr-3 mt-1"></i>
-                <span className="text-gray-300">{personalInfo.location}</span>
               </li>
             </ul>
+            <div className="mt-4">
+              <a
+                href="https://calendly.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-4 py-2 bg-primary/10 dark:bg-primary/10 text-primary dark:text-primary rounded-lg hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-background transition-colors duration-200 text-sm font-medium"
+              >
+                Schedule a Meeting
+              </a>
+            </div>
           </div>
         </div>
         
-        <div className="border-t border-gray-700 pt-6 mt-6">
+        <div className="border-t border-border py-6 text-center text-foreground/60">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm mb-4 md:mb-0">
-              &copy; {currentYear} {personalInfo.name}. All rights reserved.
-            </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Cookie Policy</a>
+            <p>© {currentYear} {personalInfo.name}. All rights reserved.</p>
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <a href="#" className="text-sm hover:text-primary transition-colors duration-200">Privacy Policy</a>
+              <a href="#" className="text-sm hover:text-primary transition-colors duration-200">Terms of Service</a>
+              <a href="#" className="text-sm hover:text-primary transition-colors duration-200">Cookie Policy</a>
             </div>
           </div>
         </div>
