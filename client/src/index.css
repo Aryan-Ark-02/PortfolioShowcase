@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&display=swap');
 
 :root {
   /* Light mode */
@@ -88,11 +88,13 @@
   }
 
   body {
-    @apply font-opensans bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Open Sans', sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-roboto font-bold;
+    @apply font-bold;
+    font-family: 'Roboto', sans-serif;
   }
 }
 
