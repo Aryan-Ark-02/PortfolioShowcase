@@ -1,0 +1,212 @@
+Portfolio Website 
+Project Overview
+Create a modern, responsive personal portfolio website for Puneet Sinha, an AI/ML leader with extensive experience in GenAI, Deep Learning, and ML technologies. The website should showcase his professional achievements, skills, and services while incorporating interactive elements and an integrated AI chatbot.
+Technical Requirements
+Use HTML5, CSS3 (with a responsive framework like Bootstrap or Tailwind CSS), and JavaScript
+Implement React.js for component-based architecture
+Ensure mobile-first responsive design that looks great on all devices
+Optimize load times and performance
+Include SEO best practices
+Deploy on Replit with proper configuration
+Key Features
+1. Home Page
+Modern hero section with a professional photo, name, and current position Brief introduction highlighting expertise in AI/ML leadership
+About Experience Skills Services Contact all in brief with show more button below each and redirect them to respective page
+Call-to-action buttons for, consultation booking, and contact
+2. About Me
+Comprehensive professional summary based on resume
+Cards showcasing of career progression in linear fashion
+Educational background and certifications
+Personal philosophy/approach to AI innovation
+High-quality professional photo
+3. Experience & Projects
+Interactive Cards of work experience
+Detailed project cards for key achievements:
+Agentic AI & GenAI Projects (Conversational AI Assistant, Automated Brochure Generation, Trust & Safety AI)
+Contact Centre Operations Optimization
+Credit Risk Analytics implementations
+Deep Learning Image Recognition Solutions
+NLP implementations in banking
+Each card should include: project name, company, time period, technologies used, situation, task, action, result
+4. Skills & Expertise
+Visual representation of technical skills (grouped by categories)
+Areas of expertise with rating indicators
+5. Job Board
+Searchable job listings section with filtering capabilities
+Job cards with small company logo/image on left, company, position, location, and requirements 
+Search bar functionality for finding specific roles or skills
+Social sharing buttons (WhatsApp, Email, LinkedIn) for each job listing
+Option to mark jobs as favorites
+6. Services & Consultation
+Details about professional services offered
+Consultation packages and pricing
+booking 1:1 calls
+Client testimonials (placeholders now, to be filled later)
+Contact form for service inquiries
+7. Blog/Articles Section
+Template for sharing insights on AI/ML topics
+Categories for different focus areas
+Comment system for engagement
+Social sharing capabilities
+8. Contact Page
+Professional contact form with validation
+Direct email and phone contact information
+Social media links (LinkedIn, GitHub, Kaggle, Stack Overflow, HuggingFace)
+Google Maps integration (optional, for location reference)
+9. AI Chatbot Integration
+Integrate Gemini 1.5 Flash-powered chat support
+Configure the chatbot to answer questions about:
+Professional background and experience
+Skills and expertise
+Services offered
+Basic project inquiries
+Scheduling consultations
+Include typing indicators and conversation history
+Design a modern chat interface that aligns with the website's aesthetics
+Implement proper API integration with response handling
+Design Requirements
+Light Mode
+Background: White (#FFFFFF)
+
+
+Primary Text: Dark Blue (#003366 approx.)
+
+
+Accent Color: Teal/Blue-Green (#0099CC)
+
+
+Progress Bars: Light to dark teal gradient
+
+
+Secondary Elements: Light gray (#F0F0F0)
+
+
+Dark Mode
+Background: Dark Charcoal (#1C1C1E approx.)
+
+
+Primary Text: White (#FFFFFF)
+
+
+Accent Color: Bright Yellow (#FFCC00)
+
+
+Progress Bars: Yellow (#FFCC00)
+
+
+Secondary Elements: Muted Gray (#2C2C2E)
+Typography: Modern, clean fonts for readability (Roboto, Open Sans, or similar)
+Visual Elements:
+Subtle animations for enhanced user experience
+Data visualizations where appropriate
+Icon set for technologies and skills
+High-quality images and graphics
+Navigation:
+Sticky header with smooth scrolling
+Hamburger menu for mobile
+Progress indicator for long scrolling sections
+Technical Implementation Details
+For Gemini 1.5 Flash Integration
+// Basic implementation structure for Gemini 1.5 Flash integration
+ import { GoogleGenerativeAI } from "@google/generative-ai";
+// Initialize the API with your key
+ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// Function to interact with the model
+ async function chatWithGemini(userMessage, chatHistory) {
+   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  
+   // Create chat session
+   const chat = model.startChat({
+ 	history: chatHistory,
+ 	generationConfig: {
+   	temperature: 0.7,
+   	topK: 40,
+   	topP: 0.95,
+   	maxOutputTokens: 1024,
+ 	},
+   });
+  
+   // Send message and get response
+   const result = await chat.sendMessage(userMessage);
+   return result.response.text();
+ }
+For Job Board Implementation
+// Basic structure for job board functionality
+ import React, { useState, useEffect } from 'react';
+function JobBoard() {
+   const [jobs, setJobs] = useState([]);
+   const [searchTerm, setSearchTerm] = useState('');
+  
+   useEffect(() => {
+ 	// Fetch jobs from backend or JSON file
+ 	fetchJobs();
+   }, []);
+  
+   const fetchJobs = async () => {
+ 	// Implementation for fetching jobs
+   };
+  
+   const handleSearch = (e) => {
+     setSearchTerm(e.target.value);
+   };
+  
+   const filteredJobs = jobs.filter(job =>
+     job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+     job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+ 	job.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase()))
+   );
+  
+   const shareJob = (platform, job) => {
+ 	// Implementation for sharing functionality
+   };
+  
+   return (
+ 	<div className="job-board-container">
+   	<div className="search-container">
+     	<input
+       	type="text"
+       	placeholder="Search jobs by title, company, or skills..."
+       	value={searchTerm}
+       	onChange={handleSearch}
+     	/>
+   	</div>
+   	
+   	<div className="jobs-list">
+     	{filteredJobs.map(job => (
+       	<JobCard
+         	key={job.id}
+         	job={job}
+         	onShare={shareJob}
+       	/>
+     	))}
+   	</div>
+ 	</div>
+   );
+ }
+Content Population
+All website content should be dynamically generated from the provided resume
+Create JSON data structures for:
+Work experience entries
+Project showcases
+Skills and technologies
+Education and certifications
+Additional Notes
+Implement proper loading states and error handling
+Add adequate margin padding space border grid flexbox and animation
+Make sure white background have black text and vice versa
+Add database and gemini api key (GEMINI_API_KEY=AIzaSyDaICEFJV1mHWU0zJSw27naFAGBj1rz2yE)
+Make home page attractive
+Add lots of cta button of schedule a call or book now connect to us and similar appropriate buttons   
+Add analytics integration for tracking visitor statistics
+Include proper meta tags for SEO optimization
+Ensure GDPR compliance with cookie consent
+Implement dark/light mode toggle
+Configure form submissions to connect to a service like Formspree
+Remember
+Focus on showcasing Puneet's expertise in AI/ML leadership
+Highlight innovative projects in Agentic AI and GenAI
+Create a professional yet modern design that reflects technical sophistication
+Ensure all interactive elements are intuitive and enhance user experience
+ 
+
+
