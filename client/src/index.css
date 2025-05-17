@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&display=swap');
+
+:root {
+  /* Light mode */
+  --background: 0 0% 100%; /* White */
+  --foreground: 210 64% 20%; /* Dark Blue - #003366 */
+  --muted: 60 4.8% 95.9%;
+  --muted-foreground: 25 5.3% 44.7%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 20 14.3% 4.1%;
+  --card: 0 0% 100%;
+  --card-foreground: 210 64% 20%;
+  --border: 20 5.9% 90%;
+  --input: 20 5.9% 90%;
+  --primary: 196 100% 40%; /* Teal/Blue-Green - #0099CC */
+  --primary-foreground: 211 100% 99%;
+  --secondary: 0 0% 94%; /* Light Gray - #F0F0F0 */
+  --secondary-foreground: 24 9.8% 10%;
+  --accent: 196 100% 40%; /* Same as primary for light mode */
+  --accent-foreground: 24 9.8% 10%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 60 9.1% 97.8%;
+  --ring: 196 100% 40%;
+  --radius: 0.5rem;
+  --chart-1: 196 100% 40%;
+  --chart-2: 196 80% 30%;
+  --chart-3: 196 60% 50%;
+  --chart-4: 210 64% 20%;
+  --chart-5: 210 44% 40%;
+  
+  /* Sidebar is not used for this project but keeping for compatibility */
+  --sidebar-background: 0 0% 100%;
+  --sidebar-foreground: 20 14.3% 4.1%;
+  --sidebar-primary: 196 100% 40%;
+  --sidebar-primary-foreground: 211 100% 99%;
+  --sidebar-accent: 196 100% 40%;
+  --sidebar-accent-foreground: 24 9.8% 10%;
+  --sidebar-border: 20 5.9% 90%;
+  --sidebar-ring: 196 100% 40%;
+}
+
+.dark {
+  /* Dark mode */
+  --background: 240 10% 11.4%; /* Dark Charcoal - #1C1C1E */
+  --foreground: 0 0% 100%; /* White */
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --primary: 48 100% 50%; /* Bright Yellow - #FFCC00 */
+  --primary-foreground: 240 10% 3.9%;
+  --secondary: 240 3.7% 18%; /* Muted Gray - #2C2C2E */
+  --secondary-foreground: 0 0% 98%;
+  --accent: 48 100% 50%; /* Same as primary for dark mode */
+  --accent-foreground: 240 10% 3.9%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 48 100% 50%;
+  --radius: 0.5rem;
+  --chart-1: 48 100% 50%;
+  --chart-2: 48 80% 40%;
+  --chart-3: 48 60% 60%;
+  --chart-4: 36 100% 50%;
+  --chart-5: 24 100% 50%;
+  
+  /* Sidebar is not used for this project but keeping for compatibility */
+  --sidebar-background: 240 10% 3.9%;
+  --sidebar-foreground: 0 0% 98%;
+  --sidebar-primary: 48 100% 50%;
+  --sidebar-primary-foreground: 240 10% 3.9%;
+  --sidebar-accent: 48 100% 50%;
+  --sidebar-accent-foreground: 240 10% 3.9%;
+  --sidebar-border: 240 3.7% 15.9%;
+  --sidebar-ring: 48 100% 50%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-opensans bg-background text-foreground antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-roboto font-bold;
+  }
+}
+
+@layer components {
+  .section-heading {
+    @apply text-3xl md:text-4xl font-bold text-center mb-8;
+  }
+  
+  .section-divider {
+    @apply w-20 h-1 bg-primary mx-auto mb-6;
+  }
+  
+  .container-padding {
+    @apply px-4 md:px-6 py-16 md:py-20;
+  }
+  
+  .btn-primary {
+    @apply bg-primary hover:bg-primary/90 text-white dark:text-background rounded-lg font-medium px-6 py-3 transition duration-300;
+  }
+  
+  .btn-secondary {
+    @apply border-2 border-primary hover:bg-primary hover:text-white dark:border-primary dark:hover:bg-primary dark:hover:text-background text-primary dark:text-primary rounded-lg font-medium px-6 py-3 transition duration-300;
+  }
+  
+  .btn-tertiary {
+    @apply bg-secondary hover:bg-secondary/70 text-foreground dark:bg-secondary dark:hover:bg-secondary/70 dark:text-foreground rounded-lg font-medium px-6 py-3 transition duration-300;
+  }
+  
+  .card-hover {
+    @apply transition duration-300 hover:shadow-xl hover:-translate-y-1;
+  }
+  
+  .progress-bar {
+    @apply relative h-2.5 rounded-full overflow-hidden bg-secondary dark:bg-secondary;
+  }
+  
+  .progress-value {
+    @apply absolute top-0 left-0 h-full rounded-full bg-gradient-to-r from-primary to-accent dark:from-primary dark:to-accent;
+  }
+  
+  /* Animation for progress bars */
+  @keyframes fillProgress {
+    from { width: 0; }
+    to { width: var(--progress-width); }
+  }
+
+  .progress-animate {
+    animation: fillProgress 1s ease-out forwards;
+  }
+  
+  /* Chat typing animation */
+  @keyframes typing {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; }
+  }
+
+  .typing span {
+    @apply inline-block w-2 h-2 rounded-full bg-primary;
+    animation: typing 1s infinite;
+  }
+
+  .typing span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-secondary/50;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/70 rounded-full;
+  border: 2px solid transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
