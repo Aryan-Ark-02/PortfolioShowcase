@@ -3,7 +3,46 @@ import { courses, categories, levels } from "@/data/courses";
 import CourseCard from "@/components/courses/CourseCard";
 import CourseFilters from "@/components/courses/CourseFilters";
 
-const getUniqueLanguages = (courses) => Array.from(new Set(courses.map(c => c.language)));
+// Define Course type based on courses.ts
+type Course = {
+  id: string;
+  title: string;
+  banner: string;
+  instructor: {
+    name: string;
+    avatar: string;
+    bio: string;
+    social: {
+      twitter: string;
+      linkedin: string;
+    };
+  };
+  description: string;
+  category: string;
+  level: string;
+  duration: string;
+  price: number;
+  rating: number;
+  language: string;
+  enrollment: number;
+  badges?: string[];
+  prerequisites: string[];
+  targetAudience: string[];
+  requirements: string[];
+  reviews: { user: string; rating: number; comment: string; date: string }[];
+  relatedCourses: string[];
+  modules: {
+    title: string;
+    lessons: {
+      title: string;
+      description: string;
+      videoUrl: string;
+      resources: { type: string; label: string; url: string }[];
+    }[];
+  }[];
+};
+
+const getUniqueLanguages = (courses: Course[]): string[] => Array.from(new Set(courses.map((c) => c.language)));
 const PAGE_SIZE = 8;
 
 const Courses = () => {

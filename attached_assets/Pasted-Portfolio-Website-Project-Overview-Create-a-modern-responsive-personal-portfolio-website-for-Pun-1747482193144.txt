@@ -194,7 +194,7 @@ Additional Notes
 Implement proper loading states and error handling
 Add adequate margin padding space border grid flexbox and animation
 Make sure white background have black text and vice versa
-Add database and gemini api key (GEMINI_API_KEY=YOUR_GEMINI_API_KEY_HERE)
+Add database and gemini api key (GEMINI_API_KEY=AIzaSyDaICEFJV1mHWU0zJSw27naFAGBj1rz2yE)
 Make home page attractive
 Add lots of cta button of schedule a call or book now connect to us and similar appropriate buttons   
 Add analytics integration for tracking visitor statistics
