@@ -18,6 +18,10 @@ import Signup from "@/pages/Signup";
 import { ChatBot } from "@/components/layout/ChatBot";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import Courses from "@/pages/Courses";
+import CourseDetail from "@/pages/CourseDetail";
+import Enroll from "@/pages/Enroll";
+import CoursePlayer from "@/pages/CoursePlayer";
 
 function Router() {
   return (
@@ -35,6 +39,10 @@ function Router() {
           <Route path="/contact" component={Contact} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path="/courses" component={Courses} />
+          <Route path="/course/:id" component={CourseDetail} />
+          <Route path="/enroll/:id" component={Enroll} />
+          <Route path="/player/:id" component={CoursePlayer} />
           <Route component={NotFound} />
         </Switch>
       </main>

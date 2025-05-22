@@ -117,6 +117,13 @@ const Navbar = () => {
             >
               Contact
             </Link>
+            <Link 
+              href="/courses" 
+              className={`${isActive("/courses")} transition-colors duration-200`}
+              onClick={handleNavLinkClick}
+            >
+              Courses
+            </Link>
           </nav>
 
           {/* Theme Toggle, Auth and Mobile Menu Button */}
@@ -223,6 +230,13 @@ const Navbar = () => {
               onClick={handleNavLinkClick}
             >
               Contact
+            </Link>
+            <Link 
+              href="/courses" 
+              className={`${isActive("/courses")} transition-colors duration-200 py-2`}
+              onClick={handleNavLinkClick}
+            >
+              Courses
             </Link>
             
             <div className="flex space-x-2 pt-2 border-t border-border mt-2">

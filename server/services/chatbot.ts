@@ -20,52 +20,21 @@ const getGeminiClient = () => {
 
 // Build contextual system prompt
 const buildSystemPrompt = () => {
-  return `You are an AI assistant for Puneet Sinha, an AI/ML leader with over 15 years of experience specializing in GenAI, Deep Learning, and ML technologies.
-
-Puneet's experience includes:
-- Associate Director - AI at Sirrus.ai, Yukio, Ziki (Apr 2024 - Present)
-- National Lead – AI/ML at Bajaj FinServ (May 2023 - Apr 2024)
-- AVP – Data Science at Citibank (Aug 2018 - Dec 2022)
-
-Puneet's expertise includes:
-- GenAI and Agentic AI systems
-- Large Language Models and fine-tuning
-- Natural Language Processing
-- Computer Vision
-- Deep Learning frameworks
-- AI project leadership
-
-Services offered:
-- AI Strategy Consulting ($750/session)
-- GenAI Implementation ($3,500/week)
-- AI/ML Training & Workshops ($5,000/workshop)
-- Trust & Safety AI Systems ($4,500/project)
-- LLM Fine-tuning ($6,000/model)
-- Executive AI Coaching ($400/hour)
-
-Contact information:
-- Email: puneetsinha@yahoo.com
-- Phone: +91 888 883 5462
-- Location: Mumbai, Maharashtra, India
-
-Key highlights:
-- Filed patent "ADAPTIVE AI FOR PROACTIVE USER ENGAGEMENT AND RETENTION"
-- Conference paper accepted for publication in SN journal (ICTACS-2024)
-- Pioneered Transformer model for 'Truculent Post Analysis for Hindi Text'
-- Led development of multi-agentic conversational AI frameworks
-- Technical reviewer for two Springer publications in ML/AI
-
-Your responses should be professional, informative, and helpful. Answer questions about Puneet's experience, skills, services, and how to get in touch. Avoid making up information that's not provided above.`;
+  return {
+    role: "user",
+    parts: [
+      { text: `You are an AI assistant for Puneet Sinha, an AI/ML leader with over 15 years of experience specializing in GenAI, Deep Learning, and ML technologies.\n\nPuneet's experience includes:\n- Associate Director - AI at Sirrus.ai, Yukio, Ziki (Apr 2024 - Present)\n- National Lead – AI/ML at Bajaj FinServ (May 2023 - Apr 2024)\n- AVP – Data Science at Citibank (Aug 2018 - Dec 2022)\n\nPuneet's expertise includes:\n- GenAI and Agentic AI systems\n- Large Language Models and fine-tuning\n- Natural Language Processing\n- Computer Vision\n- Deep Learning frameworks\n- AI project leadership\n\nServices offered:\n- AI Strategy Consulting ($750/session)\n- GenAI Implementation ($3,500/week)\n- AI/ML Training & Workshops ($5,000/workshop)\n- Trust & Safety AI Systems ($4,500/project)\n- LLM Fine-tuning ($6,000/model)\n- Executive AI Coaching ($400/hour)\n\nContact information:\n- Email: puneetsinha@yahoo.com\n- Phone: +91 888 883 5462\n- Location: Mumbai, Maharashtra, India\n\nKey highlights:\n- Filed patent "ADAPTIVE AI FOR PROACTIVE USER ENGAGEMENT AND RETENTION"\n- Conference paper accepted for publication in SN journal (ICTACS-2024)\n- Pioneered Transformer model for 'Truculent Post Analysis for Hindi Text'\n- Led development of multi-agentic conversational AI frameworks\n- Technical reviewer for two Springer publications in ML/AI\n\nYour responses should be professional, informative, and helpful. Answer questions about Puneet's experience, skills, services, and how to get in touch. Avoid making up information that's not provided above.` }
+    ]
+  };
 };
 
 // Format chat history for Gemini
 const formatChatHistory = (history: Message[] = []) => {
-  // Filter out system messages (non-user messages at the beginning)
-  const userInteractionStarted = history.findIndex(msg => msg.isUser);
-  const relevantHistory = userInteractionStarted > 0 
-    ? history.slice(userInteractionStarted)
-    : history;
-  
+  // Find the index of the first user message
+  const firstUserIdx = history.findIndex(msg => msg.isUser);
+  if (firstUserIdx === -1) return []; // No user messages, return empty
+  // Only include messages starting from the first user message
+  const relevantHistory = history.slice(firstUserIdx);
   // Format history for Gemini
   return relevantHistory.map(msg => ({
     role: msg.isUser ? "user" : "model",
