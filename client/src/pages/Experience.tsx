@@ -32,45 +32,35 @@ const Experience = () => {
         {/* Career Timeline */}
         <div className="mb-20">
           <h2 className="text-2xl font-bold text-center mb-12">Career Progression</h2>
-          
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-1 bg-primary dark:bg-primary transform md:translate-x-px"></div>
-            
-            {/* Timeline entries */}
-            <div className="space-y-12">
-              {experiences.map((exp, index) => (
-                <div key={exp.id} className="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                  <div className={`${index % 2 === 0 ? 'md:text-right md:pr-12' : 'md:col-start-2 md:text-left md:pl-12'} bg-card dark:bg-card rounded-xl p-6 shadow-lg transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1`}>
-                    <div className={`hidden md:block absolute ${index % 2 === 0 ? 'right-0 transform translate-x-6' : 'left-0 transform -translate-x-6'} top-6 w-12 h-12 rounded-full bg-primary dark:bg-primary flex items-center justify-center z-10`}>
-                      <BuildingIcon className="text-white w-6 h-6" />
+          <div className="w-full max-w-[1600px] mx-auto relative">
+            {/* Timeline line as a vertical bar */}
+            <div className="absolute left-[36px] top-0 bottom-0 w-2 bg-primary dark:bg-primary rounded-full z-0" style={{ minHeight: '100%' }}></div>
+            <div className="flex flex-col gap-16 relative z-10">
+              {experiences.map((exp, idx) => (
+                <div key={exp.id} className="flex flex-row items-center w-full">
+                  {/* Timeline dot, vertically centered with card */}
+                  <div className="flex flex-col items-center" style={{ width: '72px', minWidth: '72px' }}>
+                    <div className="w-8 h-8 rounded-full bg-primary dark:bg-primary flex items-center justify-center z-10">
+                      <BuildingIcon className="text-white w-5 h-5" />
                     </div>
-                    <h3 className="text-2xl font-bold">{exp.position}</h3>
-                    <p className="text-primary dark:text-primary font-medium text-lg">{exp.company}</p>
-                    <div className="flex items-center mt-2 mb-4 justify-start">
+                  </div>
+                  {/* Card */}
+                  <div className="bg-card dark:bg-card rounded-xl p-10 shadow-lg transition-all duration-300 hover:shadow-2xl w-full max-w-[1200px] mx-auto ml-2">
+                    <h3 className="text-2xl font-bold mb-2">{exp.position}</h3>
+                    <p className="text-primary dark:text-primary font-medium text-lg mb-2">{exp.company}</p>
+                    <div className="flex items-center mb-4">
                       <CalendarIcon className="w-4 h-4 mr-2 text-foreground/60" />
                       <p className="text-foreground/60 dark:text-foreground/60">{exp.period}</p>
                     </div>
-                    <p className="text-foreground/80 dark:text-foreground/80">
-                      {exp.description}
-                    </p>
-                    
-                    <div className="mt-4">
-                      <Button variant="link" className="p-0 h-auto text-primary group">
-                        View Projects <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                      </Button>
-                    </div>
-                  </div>
-                  <div className={`${index % 2 === 0 ? 'md:pl-12' : 'md:pr-12 md:col-start-1 md:row-start-1'}`}>
-                    <div className={`md:hidden absolute left-0 top-0 w-8 h-8 rounded-full bg-primary dark:bg-primary flex items-center justify-center transform -translate-x-4`}>
-                      <BuildingIcon className="text-white w-4 h-4" />
-                    </div>
+                    <p className="text-foreground/80 dark:text-foreground/80 mb-4">{exp.description}</p>
+                    <Button variant="link" className="p-0 h-auto text-primary group">
+                      View Projects <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          
           <div className="flex justify-center mt-12">
             <a href="/Puneet_Sinha_CV.pdf" download className="btn-secondary flex items-center">
               <CalendarIcon className="mr-2 h-5 w-5" />

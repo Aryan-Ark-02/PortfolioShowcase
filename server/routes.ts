@@ -8,6 +8,10 @@ import { db } from "./db";
 import { users, insertUserSchema, contactSubmissions, chatMessages, jobApplications, insertJobApplicationSchema } from "@shared/schema";
 import bcrypt from "bcrypt";
 import { eq } from "drizzle-orm";
+import passport from "passport";
+import { Strategy as GoogleStrategy, type VerifyCallback, type Profile } from "passport-google-oauth20";
+import jwt from "jsonwebtoken";
+import { authConfig } from "./authConfig";
 
 // Contact form schema
 const contactFormSchema = z.object({
@@ -29,6 +33,43 @@ const chatbotRequestSchema = z.object({
 
 // Signup form schema (reuse insertUserSchema, but require password)
 const signupSchema = insertUserSchema;
+
+// Google OAuth setup
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID!,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+  callbackURL: "/api/auth/google/callback"
+}, async (accessToken: string, refreshToken: string, profile: Profile, done: VerifyCallback) => {
+  try {
+    // Find user by Google ID
+    let user = await db.select().from(users).where(eq(users.googleId, profile.id));
+    if (!user.length) {
+      // If not found, create a new user
+      const email = profile.emails?.[0]?.value || "";
+      const name = profile.displayName;
+      const newUser = {
+        name,
+        email,
+        googleId: profile.id,
+        password: "google-oauth", // placeholder, not used
+        role: "user",
+        createdAt: new Date(),
+      };
+      const inserted = await db.insert(users).values(newUser).returning();
+      user = [inserted[0]];
+    }
+    return done(null, user[0]);
+  } catch (err: any) {
+    return done(err);
+  }
+}));
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+passport.deserializeUser((obj, done) => {
+  done(null, obj);
+});
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Create HTTP server
@@ -119,6 +160,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Login API
+  app.post("/api/login", async (req: Request, res: Response) => {
+    try {
+      const { email, password, redirect } = req.body;
+      if (!email || !password) {
+        return res.status(400).json({ message: "Email and password required" });
+      }
+      // Find user
+      const user = await db.select().from(users).where(eq(users.email, email));
+      if (!user.length) {
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+      // Check password
+      const valid = await bcrypt.compare(password, user[0].password);
+      if (!valid) {
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+      // Issue JWT
+      if (!process.env.JWT_SECRET) {
+        return res.status(500).json({ message: "JWT secret not set" });
+      }
+      const token = jwt.sign(
+        { id: user[0].id, email: user[0].email, name: user[0].name },
+        process.env.JWT_SECRET,
+        { expiresIn: "7d" }
+      );
+      res.cookie("token", token, { httpOnly: true });
+      // Optionally create session
+      req.login(user[0] as any, (err) => {
+        if (err) return res.status(500).json({ message: "Session error" });
+        // Redirect or respond
+        if (redirect) {
+          return res.redirect(redirect);
+        }
+        return res.redirect(authConfig.loginRedirect);
+      });
+    } catch (error) {
+      console.error("Login error:", error);
+      return res.status(500).json({ message: "Failed to login. Please try again later." });
+    }
+  });
+
   // Signup API
   app.post("/api/signup", async (req: Request, res: Response) => {
     try {
@@ -138,9 +221,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       // Hash password
       const hashedPassword = await bcrypt.hash(password, 10);
-      // Insert user
-      await db.insert(users).values({ name, email, password: hashedPassword, role });
-      return res.status(201).json({ message: "Signup successful" });
+      // Custom user creation hook
+      let newUser = { name, email, password: hashedPassword, role };
+      if (authConfig.createUserHook) {
+        newUser = await authConfig.createUserHook(newUser);
+      }
+      await db.insert(users).values(newUser);
+      // Redirect or respond
+      const redirectUrl = req.body.redirect || authConfig.signupRedirect;
+      return res.redirect(redirectUrl);
     } catch (error) {
       console.error("Signup error:", error);
       return res.status(500).json({ message: "Failed to signup. Please try again later." });
@@ -165,6 +254,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error("Job application error:", error);
       return res.status(500).json({ message: "Failed to submit job application. Please try again later." });
     }
+  });
+
+  // Google OAuth routes
+  app.get("/api/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+
+  app.get("/api/auth/google/callback", passport.authenticate("google", {
+    failureRedirect: authConfig.failureRedirect,
+    session: true
+  }), (req: Request, res: Response) => {
+    // Issue JWT
+    const user = req.user as any;
+    if (!user || !process.env.JWT_SECRET) {
+      return res.redirect(authConfig.failureRedirect);
+    }
+    const token = jwt.sign(
+      { id: user.id, email: user.email, name: user.name },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+    res.cookie("token", token, { httpOnly: true });
+    // Redirect to custom or default URL
+    const redirectUrl = req.query.redirect as string || authConfig.defaultRedirect;
+    res.redirect(redirectUrl);
   });
 
   return server;

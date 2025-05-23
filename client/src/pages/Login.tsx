@@ -2,7 +2,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -23,6 +23,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const [location, setLocation] = useLocation();
   
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -36,14 +37,30 @@ const Login = () => {
   const onSubmit = async (values: FormValues) => {
     setIsSubmitting(true);
     try {
-      // In a production app, you would integrate with your authentication API
-      // For now, we'll redirect to the login API endpoint
-      window.location.href = '/api/login';
-    } catch (error) {
+      // Support redirect param from query string
+      const params = new URLSearchParams(window.location.search);
+      const redirect = params.get("redirect") || "/";
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...values, redirect }),
+        credentials: "include",
+      });
+      if (res.redirected) {
+        window.location.href = res.url;
+        return;
+      }
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.message || "Login failed");
+      }
+      // If not redirected, go to home
+      setLocation(redirect);
+    } catch (error: any) {
       console.error("Login error:", error);
       toast({
         title: "Login failed",
-        description: "Invalid email or password. Please try again.",
+        description: error.message || "Invalid email or password. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -66,20 +83,18 @@ const Login = () => {
             {/* Social Login Buttons */}
             <div className="flex flex-col space-y-4 mb-6">
               <a 
-                href="/api/login"
+                href="/api/auth/google"
                 className="flex items-center justify-center py-3 px-4 rounded-lg border border-border hover:bg-secondary transition-colors duration-200"
               >
                 <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
-                  <path
-                    fill="currentColor"
-                    d="M12.545,12.151L12.545,12.151c0,1.054,0.855,1.909,1.909,1.909h3.536c-0.229,1.314-0.878,2.484-1.855,3.361 c-1.856,1.671-4.574,1.916-6.243,0.06c-1.269-1.409-1.723-3.215-1.234-4.956c0.268-0.954,0.879-1.816,1.831-2.514 c0.951-0.698,1.96-1.031,3.062-0.999c0.489,0.015,0.976,0.092,1.453,0.232"
-                  />
-                  <path
-                    fill="currentColor"
-                    d="M21.545,12.151L21.545,12.151h-6.818c-0.354-0.012-0.683-0.192-0.886-0.49c-0.218-0.321-0.258-0.75-0.104-1.114 c0.153-0.364,0.489-0.608,0.878-0.635l0.112-0.005h3.333c-0.535-0.663-1.251-1.146-2.131-1.451 c-1.863-0.647-3.766,0.339-4.413,2.202c-0.231,0.663-0.259,1.388-0.08,2.057"
-                  />
+                  <g>
+                    <path fill="#4285F4" d="M21.35 11.1H12v2.8h5.35c-.23 1.25-1.4 3.66-5.35 3.66-3.22 0-5.85-2.67-5.85-5.96s2.63-5.96 5.85-5.96c1.83 0 3.06.78 3.76 1.44l2.57-2.5C17.09 3.59 14.76 2.5 12 2.5 6.73 2.5 2.5 6.73 2.5 12s4.23 9.5 9.5 9.5c5.47 0 9.09-3.84 9.09-9.23 0-.62-.07-1.09-.16-1.57z"/>
+                    <path fill="#34A853" d="M3.15 7.68l2.29 1.68C6.5 8.09 8.99 6.04 12 6.04c1.83 0 3.06.78 3.76 1.44l2.57-2.5C17.09 3.59 14.76 2.5 12 2.5c-3.87 0-7.1 2.69-8.35 6.18z"/>
+                    <path fill="#FBBC05" d="M12 21.5c2.76 0 5.09-.91 6.76-2.47l-3.13-2.57c-.87.59-2.01.94-3.63.94-2.95 0-5.44-1.97-6.34-4.62l-2.29 1.77C4.9 19.01 8.13 21.5 12 21.5z"/>
+                    <path fill="#EA4335" d="M21.35 11.1H12v2.8h5.35c-.23 1.25-1.4 3.66-5.35 3.66-3.22 0-5.85-2.67-5.85-5.96s2.63-5.96 5.85-5.96c1.83 0 3.06.78 3.76 1.44l2.57-2.5C17.09 3.59 14.76 2.5 12 2.5c-3.87 0-7.1 2.69-8.35 6.18z"/>
+                  </g>
                 </svg>
-                Continue with Replit
+                Continue with Google
               </a>
             </div>
             
