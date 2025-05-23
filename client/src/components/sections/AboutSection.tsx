@@ -17,7 +17,7 @@ const AboutSection = () => {
             {/* Professional photo in office environment */}
             <div className="relative rounded-xl overflow-hidden shadow-xl">
               <img 
-                src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1000" 
+                src="https://media.licdn.com/dms/image/v2/D4D03AQHqSwYXJbvpkw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1694860038854?e=1753315200&v=beta&t=h9jvdCxcVKOPsjh5JyocoN39678xJ8rIxJRNdD_XkuI" 
                 alt="Puneet Sinha in professional setting" 
                 className="w-full h-auto max-w-lg"
               />

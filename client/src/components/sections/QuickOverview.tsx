@@ -7,25 +7,25 @@ const QuickOverview = () => {
       title: "About Me",
       description: "Data Science Leader with expertise in AI/ML innovations and 15+ years in the industry.",
       icon: "fa-user-circle",
-      link: "#about"
+      link: "about"
     },
     {
       title: "Experience",
       description: "Led AI initiatives at Sirrus.ai, Bajaj FinServ, and Citibank with significant business impact.",
       icon: "fa-briefcase",
-      link: "#experience"
+      link: "experience"
     },
     {
       title: "Skills",
       description: "GenAI, LLMs, Deep Learning, NLP, Python, TensorFlow, PyTorch, and more.",
       icon: "fa-code",
-      link: "#skills"
+      link: "skills"
     },
     {
       title: "Services",
       description: "AI strategy consulting, GenAI implementation, LLM fine-tuning, and ML solutions.",
       icon: "fa-hands-helping",
-      link: "#services"
+      link: "services"
     }
   ];
 

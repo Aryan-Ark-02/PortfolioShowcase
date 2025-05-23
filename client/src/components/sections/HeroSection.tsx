@@ -26,19 +26,19 @@ const HeroSection = () => {
             
             <div className="flex flex-wrap gap-4 pt-4">
               <a 
-                href="#contact" 
+                href="contact" 
                 className="btn-primary"
               >
                 Book Consultation
               </a>
               <a 
-                href="#services" 
+                href="services" 
                 className="btn-secondary"
               >
                 Explore Services
               </a>
               <a 
-                href="#about" 
+                href="about" 
                 className="btn-tertiary"
               >
                 Learn More
@@ -98,7 +98,7 @@ const HeroSection = () => {
             {/* Professional headshot */}
             <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-background dark:border-background shadow-xl">
               <img 
-                src={personalInfo.profileImage} 
+                src="https://media.licdn.com/dms/image/v2/D4D03AQHqSwYXJbvpkw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1694860038854?e=1753315200&v=beta&t=h9jvdCxcVKOPsjh5JyocoN39678xJ8rIxJRNdD_XkuI" 
                 alt={`${personalInfo.name} - AI/ML Leader`} 
                 className="w-full h-full object-cover"
               />
